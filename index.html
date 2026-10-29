@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Provably Fair Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Algerian&family=Cinzel:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:#070b14;color:#e2e8f0;min-height:100vh;padding:16px}
+.wrap{max-width:480px;margin:0 auto}
+
+/* ===== TITLE + JORDAN KINI ===== */
+.header{text-align:center;margin-bottom:20px;position:relative}
+.title-wrap{display:inline-block;position:relative}
+h1{
+  font-family:'Cinzel','Playfair Display',Georgia,serif;
+  font-size:clamp(1.4rem,5vw,1.7rem);
+  font-weight:700;
+  letter-spacing:2px;
+  background:linear-gradient(135deg,#00f0ff 0%,#a855f7 50%,#00f0ff 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shine 4s linear infinite, floatY 3s ease-in-out infinite;
+  margin-bottom:2px;
+}
+.author{
+  font-family:'Cinzel','Playfair Display',Georgia,serif;
+  font-size:clamp(1.4rem,5vw,1.7rem);
+  font-weight:700;
+  letter-spacing:3px;
+  background:linear-gradient(135deg,#a855f7 0%,#00f0ff 50%,#a855f7 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shine 4s linear infinite reverse, floatY 3s ease-in-out infinite 0.4s;
+  display:block;
+  text-shadow:0 0 30px #a855f744;
+}
+@keyframes shine{
+  0%{background-position:0% center}
+  100%{background-position:200% center}
+}
+@keyframes floatY{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-3px)}
+}
+.sub{text-align:center;color:#64748b;font-size:.8rem;margin-top:8px;margin-bottom:4px;opacity:0;animation:fadeIn .8s ease forwards .3s}
+@keyframes fadeIn{to{opacity:1}}
+
+.panel{background:#0d1525;border:1px solid #1a2a45;border-radius:12px;padding:16px;margin-bottom:14px}
+label{display:block;font-size:.75rem;color:#64748b;margin-bottom:4px}
+input,select{width:100%;background:#0a101c;border:1px solid #1a2a45;border-radius:8px;padding:10px;color:#e2e8f0;font-family:monospace;font-size:.9rem;margin-bottom:12px}
+input:focus,select:focus{outline:none;border-color:#00f0ff}
+.row{display:flex;gap:8px}
+.row input{margin-bottom:0}
+button{width:100%;padding:12px;border:none;border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;background:linear-gradient(135deg,#00c4d4,#7c3aed);color:#fff;transition:opacity .15s}
+button:hover{opacity:.9}
+button:disabled{opacity:.5;cursor:wait}
+.btn2{background:transparent;border:1px solid #1a2a45;color:#64748b;width:auto;padding:10px 14px}
+.tabs{display:flex;gap:4px;margin-bottom:12px}
+.tab{flex:1;padding:7px;text-align:center;font-size:.75rem;font-weight:600;border-radius:6px;cursor:pointer;color:#64748b;background:#0a101c;border:none}
+.tab.on{background:#00f0ff22;color:#00f0ff}
+.hide{display:none}
+
+/* ===== CIRCLE ANIMATED ===== */
+.circle-box{text-align:center;padding:8px 0 4px}
+.circle{width:220px;height:220px;margin:0 auto;position:relative}
+.orbit{position:absolute;inset:-6px;border-radius:50%;border:1px dashed #00f0ff22;animation:spin 12s linear infinite}
+.orbit2{position:absolute;inset:-14px;border-radius:50%;border:1px dashed #a855f722;animation:spin 20s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring-bg{position:absolute;inset:0;border-radius:50%;background:#0a101c;border:2px solid #1a2a45;box-shadow:0 0 40px #00f0ff08,inset 0 0 30px #0008}
+.ring{position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from -90deg,#00f0ff 0deg,#a855f7 var(--p,0deg),transparent var(--p,0deg));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 10px),#000 calc(100% - 9px));
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 10px),#000 calc(100% - 9px));
+  filter:drop-shadow(0 0 10px #00f0ff88);
+}
+.ring.spinning{animation:ringPulse 1s ease-in-out infinite}
+@keyframes ringPulse{0%,100%{filter:drop-shadow(0 0 8px #00f0ff66)}50%{filter:drop-shadow(0 0 18px #00f0ff)}}
+.glow{position:absolute;inset:20px;border-radius:50%;background:radial-gradient(circle,#00f0ff15,transparent 70%);opacity:0;transition:opacity .4s}
+.glow.on{opacity:1;animation:glowPulse 2s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{opacity:.6}50%{opacity:1}}
+.inner{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#12203a,#070b14);border:1px solid #1a2a4588;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2}
+.ml{font-size:.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px}
+.mv{font-size:2.4rem;font-weight:700;font-family:monospace;color:#00f0ff;line-height:1;transition:color .3s,text-shadow .3s;text-shadow:0 0 20px #00f0ff44}
+.mv.pop{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.15)}100%{transform:scale(1)}}
+.xs{font-size:1rem;color:#00f0ff;margin-top:2px;opacity:.8}
+.dots{display:flex;gap:5px;margin-top:10px;justify-content:center}
+.dot{width:6px;height:6px;border-radius:50%;background:#1a2a45;transition:background .3s,box-shadow .3s}
+.dot.on{background:#00f0ff;box-shadow:0 0 8px #00f0ff}
+.dot.run{animation:dotBlink .6s infinite}
+@keyframes dotBlink{0%,100%{opacity:1}50%{opacity:.3}}
+.info{font-family:monospace;font-size:.72rem;color:#64748b;word-break:break-all;line-height:1.55;margin-top:12px;text-align:left}
+.info b{color:#00f0ff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="title-wrap">
+      <h1>PROVABLY FAIR PRO</h1>
+      <span class="author">Jordan Kini</span>
+    </div>
+    <p class="sub">SHA-256 → Multiplicador • 100% local</p>
+  </div>
+
+  <div class="panel">
+    <div class="tabs">
+      <button class="tab on" onclick="setMode('s',this)">Seed → Hash</button>
+      <button class="tab" onclick="setMode('h',this)">Hash Direto</button>
+    </div>
+    <div id="ms">
+      <label>String (20 caracteres)</label>
+      <div class="row">
+        <input id="seed" maxlength="64" placeholder="a1b2c3d4e5f6g7h8i9j0" style="flex:1">
+        <button class="btn2" onclick="rnd()">🎲</button>
+      </div>
+      <label style="margin-top:10px">Nonce</label>
+      <input id="nonce" type="number" value="0" min="0">
+      <label>Server Seed (opcional = HMAC)</label>
+      <input id="ss" placeholder="vazio = SHA-256 simples">
+    </div>
+    <div id="mh" class="hide">
+      <label>SHA-256 (64 hex)</label>
+      <input id="hash" maxlength="64" placeholder="cole o hash...">
+    </div>
+    <label>Fórmula</label>
+    <select id="f">
+      <option value="b">Bustabit (52-bit · 1%)</option>
+      <option value="s">Stake (32-bit · 1%)</option>
+      <option value="p">Pure (sem edge)</option>
+    </select>
+    <button id="btn" onclick="go()">Calcular Multiplicador</button>
+  </div>
+
+  <div class="panel circle-box">
+    <div class="circle">
+      <div class="orbit"></div>
+      <div class="orbit2"></div>
+      <div class="ring-bg"></div>
+      <div class="ring" id="ring"></div>
+      <div class="glow" id="glow"></div>
+      <div class="inner">
+        <div class="ml">Multiplicador</div>
+        <div class="mv" id="mv">—.—</div>
+        <div class="xs">×</div>
+      </div>
+    </div>
+    <div class="dots" id="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="info" id="info">Aguardando entrada...</div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let mode='s', animId=null;
+
+function setMode(m,el){
+  mode=m;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  $('ms').classList.toggle('hide',m!=='s');
+  $('mh').classList.toggle('hide',m!=='h');
+}
+
+function rnd(){
+  const c='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const a=new Uint8Array(20);crypto.getRandomValues(a);
+  $('seed').value=[...a].map(x=>c[x%c.length]).join('');
+}
+
+async function sha(m){
+  const d=new TextEncoder().encode(m);
+  const b=await crypto.subtle.digest('SHA-256',d);
+  return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function hmac(k,m){
+  const e=new TextEncoder();
+  const key=await crypto.subtle.importKey('raw',e.encode(k),{name:'HMAC',hash:'SHA-256'},0,['sign']);
+  const s=await crypto.subtle.sign('HMAC',key,e.encode(m));
+  return[...new Uint8Array(s)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+function calc(h,f){
+  if(f==='b'){const n=parseInt(h.slice(0,13),16),e=2**52;return{m:Math.max(1,Math.floor((100*e-n)/(e-n))/100),r:n/e,b:'52-bit'}}
+  if(f==='s'){const n=parseInt(h.slice(0,8),16);return{m:Math.floor(Math.max(1,(2**32/(n+1))*0.99)*100)/100,r:n/2**32,b:'32-bit'}}
+  const n=parseInt(h.slice(0,13),16),e=2**52,r=n/e;
+  return{m:Math.max(1,Math.floor(1/(1-r)*100)/100),r,b:'52-bit pure'}
+}
+
+function setDots(state){
+  const ds=[...$('dots').children];
+  ds.forEach(d=>{d.className='dot';});
+  if(state==='run') ds.forEach(d=>d.classList.add('run'));
+  if(state==='ok') ds.forEach(d=>d.classList.add('on'));
+}
+
+function animateMulti(target){
+  return new Promise(resolve=>{
+    if(animId) cancelAnimationFrame(animId);
+    const start=1, duration=1400;
+    const t0=performance.now();
+    const ring=$('ring'), mv=$('mv'), glow=$('glow');
+    ring.classList.add('spinning');
+    glow.classList.add('on');
+    setDots('run');
+
+    function frame(now){
+      const t=Math.min((now-t0)/duration,1);
+      const e=1-Math.pow(1-t,3);
+      const cur=start+(target-start)*e;
+      mv.textContent=cur.toFixed(2);
+      const deg=Math.min(cur,100)/100*360;
+      ring.style.setProperty('--p',deg+'deg');
+
+      if(t<1){animId=requestAnimationFrame(frame)}
+      else{
+        mv.textContent=target.toFixed(2);
+        ring.style.setProperty('--p',Math.min(target,100)/100*360+'deg');
+        ring.classList.remove('spinning');
+        mv.classList.remove('pop');
+        void mv.offsetWidth;
+        mv.classList.add('pop');
+        if(target<1.5){mv.style.color='#ef4444';mv.style.textShadow='0 0 20px #ef444466'}
+        else if(target>=10){mv.style.color='#22c55e';mv.style.textShadow='0 0 20px #22c55e66'}
+        else{mv.style.color='#00f0ff';mv.style.textShadow='0 0 20px #00f0ff66'}
+        setDots('ok');
+        resolve();
+      }
+    }
+    animId=requestAnimationFrame(frame);
+  });
+}
+
+async function go(){
+  const btn=$('btn');
+  btn.disabled=true;
+  btn.textContent='Calculando...';
+  $('mv').textContent='...';
+  $('mv').style.color='#00f0ff';
+  $('mv').style.textShadow='0 0 20px #00f0ff44';
+  $('ring').style.setProperty('--p','0deg');
+  $('glow').classList.remove('on');
+  setDots('run');
+
+  let h;
+  try{
+    if(mode==='s'){
+      const seed=$('seed').value.trim();
+      if(!seed){alert('Insira a string');btn.disabled=false;btn.textContent='Calcular Multiplicador';return}
+      const n=$('nonce').value||'0',ss=$('ss').value.trim();
+      h=ss?await hmac(ss,seed+':'+n):await sha(seed+':'+n);
+    }else{
+      h=$('hash').value.trim().toLowerCase();
+      if(!/^[0-9a-f]{64}$/.test(h)){alert('Hash inválido (64 hex)');btn.disabled=false;btn.textContent='Calcular Multiplicador';return}
+    }
+    await new Promise(r=>setTimeout(r,200));
+    const r=calc(h,$('f').value);
+    await animateMulti(r.m);
+    $('info').innerHTML=`<b>${r.m.toFixed(2)}×</b> · ${r.b}<br><span style="opacity:.7">${h}</span>`;
+  }catch(e){
+    alert('Erro: '+e.message);
+    setDots('');
+  }
+  btn.disabled=false;
+  btn.textContent='Calcular Multiplicador';
+}
+
+$('seed').value='provablyfairpro2024';
+</script>
+</body>
+</html>
